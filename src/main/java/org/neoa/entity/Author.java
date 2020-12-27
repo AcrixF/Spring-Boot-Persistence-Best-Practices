@@ -23,7 +23,7 @@ public class Author implements Serializable {
     private int age;
 
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "author", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Book> books = new ArrayList<>();
 
     public void addBook(Book book) {
