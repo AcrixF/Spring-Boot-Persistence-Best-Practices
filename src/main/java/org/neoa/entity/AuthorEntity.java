@@ -4,7 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,7 +19,7 @@ import java.util.List;
 @Setter
 @Entity
 @Accessors(chain = true)
-public class Author implements Serializable {
+public class AuthorEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,22 +29,22 @@ public class Author implements Serializable {
 
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Book> books = new ArrayList<>();
+    private List<BookEntity> books = new ArrayList<>();
 
-    public void addBook(Book book) {
+    public void addBook(BookEntity book) {
         this.books.add(book);
         book.setAuthor(this);
     }
 
-    public void removeBook(Book book) {
+    public void removeBook(BookEntity book) {
         book.setAuthor(null);
         this.books.remove(book);
     }
 
     public void removeBooks() {
-        Iterator<Book> iterator = this.books.iterator();
+        Iterator<BookEntity> iterator = this.books.iterator();
         while (iterator.hasNext()) {
-            Book book = iterator.next();
+            BookEntity book = iterator.next();
             book.setAuthor(null);
             iterator.remove();
         }
