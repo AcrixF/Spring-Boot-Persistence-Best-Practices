@@ -1,5 +1,6 @@
 package org.neoa.service;
 
+import lombok.extern.log4j.Log4j2;
 import org.neoa.entity.AuthorEntity;
 import org.neoa.entity.BookEntity;
 import org.neoa.repository.AuthorRepository;
@@ -10,6 +11,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Log4j2
 public class AuthorService {
     private final AuthorRepository repository;
 
@@ -20,6 +22,7 @@ public class AuthorService {
 
     @Transactional
     public void insertAuthorWithBooks() {
+        log.info("Creating Author");
         AuthorEntity author = new AuthorEntity()
                 .setName("Joana Nimar")
                 .setAge(34)
@@ -40,6 +43,19 @@ public class AuthorService {
         author.setBooks(List.of(bookOne, bookTwo, bookThree));
 
         repository.saveAndFlush(author);
+    }
 
+    @Transactional
+    public void insertNewBook() {
+        log.info("Inserting new Book");
+        AuthorEntity author = repository.findAuthorEntityByName("Joana Nimar")
+                .orElseThrow();
+
+        BookEntity book = new BookEntity()
+                .setIsbn("004-JN")
+                .setTitle("History Details");
+
+        author.addBook(book);
+        repository.saveAndFlush(author);
     }
 }
