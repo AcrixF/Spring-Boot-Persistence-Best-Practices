@@ -19,7 +19,7 @@ import java.util.List;
 @Setter
 @Entity
 @Accessors(chain = true)
-public class AuthorEntity implements Serializable {
+public class Author implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,22 +29,22 @@ public class AuthorEntity implements Serializable {
 
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<BookEntity> books = new ArrayList<>();
+    private List<Book> books = new ArrayList<>();
 
-    public void addBook(BookEntity book) {
+    public void addBook(Book book) {
         this.books.add(book);
         book.setAuthor(this);
     }
 
-    public void removeBook(BookEntity book) {
+    public void removeBook(Book book) {
         book.setAuthor(null);
         this.books.remove(book);
     }
 
     public void removeBooks() {
-        Iterator<BookEntity> iterator = this.books.iterator();
+        Iterator<Book> iterator = this.books.iterator();
         while (iterator.hasNext()) {
-            BookEntity book = iterator.next();
+            Book book = iterator.next();
             book.setAuthor(null);
             iterator.remove();
         }

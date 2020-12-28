@@ -1,8 +1,8 @@
 package org.neoa.service;
 
 import lombok.extern.log4j.Log4j2;
-import org.neoa.entity.AuthorEntity;
-import org.neoa.entity.BookEntity;
+import org.neoa.entity.Author;
+import org.neoa.entity.Book;
 import org.neoa.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,20 +23,20 @@ public class AuthorService {
     @Transactional
     public void insertAuthorWithBooks() {
         log.info("Creating Author");
-        AuthorEntity author = new AuthorEntity()
+        Author author = new Author()
                 .setName("Joana Nimar")
                 .setAge(34)
                 .setGenre("History");
 
-        BookEntity bookOne = new BookEntity()
+        Book bookOne = new Book()
                 .setIsbn("001-JN")
                 .setTitle("A History of Ancient Prague");
 
-        BookEntity bookTwo = new BookEntity()
+        Book bookTwo = new Book()
                 .setIsbn("002-JN")
                 .setTitle("A People's History");
 
-        BookEntity bookThree = new BookEntity()
+        Book bookThree = new Book()
                 .setIsbn("003-JN")
                 .setTitle("World History");
 
@@ -48,14 +48,23 @@ public class AuthorService {
     @Transactional
     public void insertNewBook() {
         log.info("Inserting new Book");
-        AuthorEntity author = repository.findAuthorEntityByName("Joana Nimar")
+        Author author = repository.findAuthorEntityByName("Joana Nimar")
                 .orElseThrow();
 
-        BookEntity book = new BookEntity()
+        Book book = new Book()
                 .setIsbn("004-JN")
                 .setTitle("History Details");
 
         author.addBook(book);
         repository.saveAndFlush(author);
+    }
+    
+    @Transactional
+    public void deleteLastBook() {
+        log.info("Deleting Book");
+        Author author = repository.findAuthorEntityByName("Joana Nimar").orElseThrow();
+        List<Book> books = author.getBooks();
+
+        author.removeBook(books.get(books.size() - 1));
     }
 }

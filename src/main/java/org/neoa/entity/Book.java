@@ -17,7 +17,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class BookEntity implements Serializable {
+public class Book implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,7 +26,7 @@ public class BookEntity implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
-    private AuthorEntity author;
+    private Author author;
 
     @Override
     public boolean equals(Object obj) {
@@ -39,7 +39,7 @@ public class BookEntity implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        return id != null && id.equals(((BookEntity) obj).id);
+        return id != null && id.equals(((Book) obj).id);
     }
 
     @Override
