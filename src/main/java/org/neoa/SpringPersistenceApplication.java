@@ -27,7 +27,7 @@ public class SpringPersistenceApplication {
             Thread.sleep(3000);
             authorService.insertNewBook();
             Thread.sleep(3000);
-            authorService.deleteLastBook();
+            authorService.deleteFirstBook();
         };
 
     }
