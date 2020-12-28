@@ -61,10 +61,19 @@ public class AuthorService {
     
     @Transactional
     public void deleteLastBook() {
-        log.info("Deleting Book");
+        log.info("Deleting Last Book");
         Author author = repository.findAuthorEntityByName("Joana Nimar").orElseThrow();
         List<Book> books = author.getBooks();
 
         author.removeBook(books.get(books.size() - 1));
+    }
+
+    @Transactional
+    public void deleteFirstBook() {
+        log.info("Deleting First Book");
+        Author author = repository.findAuthorEntityByName("Joana Nimar").orElseThrow();
+        List<Book> books = author.getBooks();
+
+        author.removeBook(books.get(0));
     }
 }
