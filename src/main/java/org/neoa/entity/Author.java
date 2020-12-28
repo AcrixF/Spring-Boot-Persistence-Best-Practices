@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -29,6 +30,7 @@ public class Author implements Serializable {
 
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderColumn(name = "books_order")
     private List<Book> books = new ArrayList<>();
 
     public void addBook(Book book) {
