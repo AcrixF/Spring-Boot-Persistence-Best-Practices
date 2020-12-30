@@ -44,25 +44,25 @@ public class AuthorService {
         Author author = authorRepository.getOne(1L);
 
         Book bookOne = new Book()
-                .setIsbn("004-JN")
+                .setIsbn("003-JN")
                 .setTitle("History Details")
                 .setAuthor(author);
 
         Book bookTwo = new Book()
-                .setIsbn("003-JN")
+                .setIsbn("002-JN")
                 .setTitle("History Of The World")
                 .setAuthor(author);
 
         Book bookThree = new Book()
-                .setIsbn("003-JN")
-                .setTitle("History Of The World")
+                .setIsbn("001-JN")
+                .setTitle("History Of The World II")
                 .setAuthor(author);
 
         bookRepository.saveAndFlush(bookOne);
         bookRepository.saveAndFlush(bookTwo);
         bookRepository.saveAndFlush(bookThree);
 
-        //Hibernate Dirty Mechanims
+        //Hibernate Dirty Mechanisms
         bookOne.setIsbn("not available");
     }
 
@@ -70,6 +70,8 @@ public class AuthorService {
     public void fetchBooksOfAuthorById() {
         log.info("Fetching books by Author's Id");
         List<Book> books = bookRepository.fetchBooksOfAuthorById(1L);
+
+        //Hibernate Dirty Mechanisms
         books.get(0).setIsbn("Now Available");
     }
 
@@ -78,5 +80,18 @@ public class AuthorService {
         Page<Book> books = bookRepository.fetchPageBooksOfAuthorById(1L,
                 PageRequest.of(0, 2, Sort.by(Sort.Direction.ASC, "title")));
         books.forEach(System.out::println);
+    }
+
+    @Transactional
+    public void fetchBooksOfAuthorByIdAndAddNewBook() {
+        log.info("Fetching Author's books and saving a new book");
+        List<Book> books = bookRepository.fetchBooksOfAuthorById(1L);
+
+        Book bookFour = new Book()
+                .setIsbn("001-JN")
+                .setTitle("History Of The World II")
+                .setAuthor(books.get(0).getAuthor());
+
+        books.add(bookRepository.save(bookFour));
     }
 }
