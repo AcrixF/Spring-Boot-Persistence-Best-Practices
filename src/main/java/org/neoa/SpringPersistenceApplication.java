@@ -23,17 +23,7 @@ public class SpringPersistenceApplication {
     @Bean
     public CommandLineRunner commandLineRunner() {
         return args -> {
-            authorService.insertAuthor();
-            Thread.sleep(3000);
-            authorService.addNewBookToAuthor();
-            Thread.sleep(3000);
-            authorService.fetchBooksOfAuthorById();
-            Thread.sleep(3000);
-            authorService.fetchPageBooksOfAuthorById();
-            Thread.sleep(3000);
-            authorService.fetchBooksOfAuthorByIdAndAddNewBook();
-            Thread.sleep(3000);
-            authorService.fetchBooksOfAuthorByIdAndDeleteFirstBook();
+
         };
 
     }
