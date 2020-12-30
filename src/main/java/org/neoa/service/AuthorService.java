@@ -50,9 +50,11 @@ public class AuthorService {
         book.setIsbn("not available");
     }
 
+    @Transactional
     public void fetchBooksOfAuthorById() {
-        log.info("Fetching book by Author's Id");
+        log.info("Fetching books by Author's Id");
         List<Book> books = bookRepository.fetchBooksOfAuthorById(1L);
+        books.get(0).setIsbn("Now Available");
     }
 
 }
