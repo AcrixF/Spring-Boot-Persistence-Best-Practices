@@ -10,8 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -24,9 +27,8 @@ public class Book implements Serializable {
     private String title;
     private String isbn;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id")
-    private Author author;
+    @ManyToMany(mappedBy = "books")
+    private Set<Author> authors = new HashSet<>();
 
     @Override
     public boolean equals(Object obj) {
@@ -46,6 +48,7 @@ public class Book implements Serializable {
     public int hashCode() {
         return 2021;
     }
+
     @Override
     public String toString() {
         return "Book{" + "id=" + id + ", title=" + title
