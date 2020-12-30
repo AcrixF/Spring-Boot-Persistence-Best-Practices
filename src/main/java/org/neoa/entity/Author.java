@@ -5,9 +5,9 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,7 +33,7 @@ public class Author implements Serializable {
     @JoinTable(name = "author_book",
             joinColumns = @JoinColumn(name = "author_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id"))
-    private Set<Book> books = new HashSet<>();
+    private List<Book> books = new ArrayList<>();
 
     public void addBook(Book book) {
         this.books.add(book);
