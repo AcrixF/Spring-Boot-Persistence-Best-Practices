@@ -28,6 +28,8 @@ public class SpringPersistenceApplication {
             authorService.addNewBookToAuthor();
             Thread.sleep(3000);
             authorService.fetchBooksOfAuthorById();
+            Thread.sleep(3000);
+            authorService.fetchPageBooksOfAuthorById();
         };
 
     }

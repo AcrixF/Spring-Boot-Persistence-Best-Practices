@@ -6,9 +6,12 @@ import org.neoa.entity.Book;
 import org.neoa.repository.AuthorRepository;
 import org.neoa.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -40,14 +43,27 @@ public class AuthorService {
         log.info("Inserting new Book");
         Author author = authorRepository.getOne(1L);
 
-        Book book = new Book()
+        Book bookOne = new Book()
                 .setIsbn("004-JN")
                 .setTitle("History Details")
                 .setAuthor(author);
 
-        bookRepository.saveAndFlush(book);
+        Book bookTwo = new Book()
+                .setIsbn("003-JN")
+                .setTitle("History Of The World")
+                .setAuthor(author);
 
-        book.setIsbn("not available");
+        Book bookThree = new Book()
+                .setIsbn("003-JN")
+                .setTitle("History Of The World")
+                .setAuthor(author);
+
+        bookRepository.saveAndFlush(bookOne);
+        bookRepository.saveAndFlush(bookTwo);
+        bookRepository.saveAndFlush(bookThree);
+
+        //Hibernate Dirty Mechanims
+        bookOne.setIsbn("not available");
     }
 
     @Transactional
@@ -57,4 +73,10 @@ public class AuthorService {
         books.get(0).setIsbn("Now Available");
     }
 
+    public void fetchPageBooksOfAuthorById() {
+        log.info("Fetching Page books by Author's Id ");
+        Page<Book> books = bookRepository.fetchPageBooksOfAuthorById(1L,
+                PageRequest.of(0, 2, Sort.by(Sort.Direction.ASC, "title")));
+        books.forEach(System.out::println);
+    }
 }
