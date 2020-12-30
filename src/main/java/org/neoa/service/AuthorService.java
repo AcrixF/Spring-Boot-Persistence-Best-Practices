@@ -46,6 +46,7 @@ public class AuthorService {
 
         bookRepository.saveAndFlush(book);
 
+        book.setIsbn("not available");
     }
 
 }
