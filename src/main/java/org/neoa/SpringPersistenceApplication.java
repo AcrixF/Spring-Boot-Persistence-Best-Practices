@@ -26,6 +26,8 @@ public class SpringPersistenceApplication {
             authorService.insertAuthor();
             Thread.sleep(3000);
             authorService.addNewBookToAuthor();
+            Thread.sleep(3000);
+            authorService.fetchBooksOfAuthorById();
         };
 
     }
