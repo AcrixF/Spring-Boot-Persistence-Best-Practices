@@ -32,6 +32,8 @@ public class SpringPersistenceApplication {
             authorService.fetchPageBooksOfAuthorById();
             Thread.sleep(3000);
             authorService.fetchBooksOfAuthorByIdAndAddNewBook();
+            Thread.sleep(3000);
+            authorService.fetchBooksOfAuthorByIdAndDeleteFirstBook();
         };
 
     }

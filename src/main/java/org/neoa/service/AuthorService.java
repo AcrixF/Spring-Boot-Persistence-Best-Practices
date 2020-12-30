@@ -94,4 +94,11 @@ public class AuthorService {
 
         books.add(bookRepository.save(bookFour));
     }
+
+    @Transactional
+    public void fetchBooksOfAuthorByIdAndDeleteFirstBook() {
+        log.info("Deleting first book from collection");
+        List<Book> books = bookRepository.fetchBooksOfAuthorById(1L);
+        bookRepository.delete(books.remove(0));
+    }
 }
