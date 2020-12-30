@@ -39,5 +39,33 @@ public class AuthorService {
         authorRepository.saveAll(List.of(authorAlicia, authorMark));
     }
 
+    @Transactional
+    public void insertBooks() throws InterruptedException {
+        log.info("Inserting books");
+        Book bookOne = new Book()
+                .setTitle("The Book od Sword")
+                .setIsbn("001-AT-MJ");
+
+        Book bookTwo = new Book()
+                .setTitle("One Day")
+                .setIsbn("002-AT-MJ");
+
+        Book bookThree = new Book()
+                .setTitle("Head Down")
+                .setIsbn("001-AT");
+
+        bookRepository.saveAll(List.of(bookOne, bookTwo, bookThree));
+
+        Author authorOne = authorRepository.getOne(1L);
+
+        log.info("Saving Book in Author One");
+        authorOne.setBooks(List.of(bookOne, bookTwo, bookThree));
+        Thread.sleep(3000);
+
+        log.info("Saving Book in Author Two");
+        Author authorTwo = authorRepository.getOne(2L);
+        authorTwo.setBooks(List.of(bookOne, bookTwo));
+    }
+
 
 }
