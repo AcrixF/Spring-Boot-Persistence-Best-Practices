@@ -23,6 +23,7 @@ public class SpringPersistenceApplication {
     @Bean
     public CommandLineRunner commandLineRunner() {
         return args -> {
+            authorService.insertAuthors();
 
         };
 
