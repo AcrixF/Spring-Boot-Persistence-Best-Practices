@@ -30,7 +30,7 @@ public class Author implements Serializable {
     private int age;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "author_book",
+    @JoinTable(name = "author_book_list",
             joinColumns = @JoinColumn(name = "author_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id"))
     private List<Book> books = new ArrayList<>();
