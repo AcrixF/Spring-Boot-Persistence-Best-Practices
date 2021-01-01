@@ -26,6 +26,8 @@ public class AuthorService {
 
     @Transactional
     public void insertAuthors() {
+        log.info("Inserting authors");
+
         Author authorAlicia = new Author()
                 .setAge(38)
                 .setGenre("Anthology")
@@ -36,14 +38,8 @@ public class AuthorService {
                 .setGenre("Anthology")
                 .setName("Mark Janel");
 
-        authorRepository.saveAll(List.of(authorAlicia, authorMark));
-    }
-
-    @Transactional
-    public void insertBooks() throws InterruptedException {
-        log.info("Inserting books");
         Book bookOne = new Book()
-                .setTitle("The Book od Sword")
+                .setTitle("The Book of Sword")
                 .setIsbn("001-AT-MJ");
 
         Book bookTwo = new Book()
@@ -54,18 +50,25 @@ public class AuthorService {
                 .setTitle("Head Down")
                 .setIsbn("001-AT");
 
-        bookRepository.saveAll(List.of(bookOne, bookTwo, bookThree));
+        authorAlicia.addBook(bookOne);
+        authorAlicia.addBook(bookTwo);
+        authorAlicia.addBook(bookThree);
 
-        Author authorOne = authorRepository.getOne(1L);
+        authorMark.addBook(bookOne);
+        authorMark.addBook(bookTwo);
 
-        log.info("Saving Book in Author One");
-        authorOne.setBooks(List.of(bookOne, bookTwo, bookThree));
-        Thread.sleep(3000);
+        authorRepository.saveAndFlush(authorAlicia);
+        authorRepository.saveAndFlush(authorMark);
 
-        log.info("Saving Book in Author Two");
-        Author authorTwo = authorRepository.getOne(2L);
-        authorTwo.setBooks(List.of(bookOne, bookTwo));
+        //authorAlicia.removeBook(bookOne);
     }
 
+    @Transactional
+    public void deleteBookFromAuthor() {
+        log.info("Removing Book from Author");
+        Author author = authorRepository.findById(1L).orElseThrow();
+        Book book = bookRepository.findById(1L).orElseThrow();
 
+        author.removeBook(book);
+    }
 }
