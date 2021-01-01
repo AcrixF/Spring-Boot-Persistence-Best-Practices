@@ -4,16 +4,16 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OrderBy;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -27,7 +27,8 @@ public class Book implements Serializable {
     private String isbn;
 
     @ManyToMany(mappedBy = "books")
-    private Set<Author> authors = new HashSet<>();
+    @OrderBy("age DESC")
+    private Set<Author> authors = new LinkedHashSet<>();
 
     @Override
     public boolean equals(Object obj) {

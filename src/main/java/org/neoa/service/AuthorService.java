@@ -1,5 +1,6 @@
 package org.neoa.service;
 
+import lombok.extern.log4j.Log4j2;
 import org.neoa.entity.Author;
 import org.neoa.entity.Book;
 import org.neoa.repository.AuthorRepository;
@@ -7,7 +8,6 @@ import org.neoa.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import lombok.extern.log4j.Log4j2;
 
 import java.util.List;
 
@@ -28,47 +28,55 @@ public class AuthorService {
     public void insertAuthors() {
         log.info("Inserting authors");
 
+        Book book = new Book()
+                .setTitle("Encyclopedia")
+                .setIsbn("001-all");
+
         Author authorAlicia = new Author()
                 .setAge(38)
                 .setGenre("Anthology")
                 .setName("Alicia Tom");
 
+        authorAlicia.addBook(book);
+
         Author authorMark = new Author()
                 .setAge(23)
                 .setGenre("Anthology")
                 .setName("Mark Janel");
+        authorMark.addBook(book);
 
-        Book bookOne = new Book()
-                .setTitle("The Book of Sword")
-                .setIsbn("001-AT-MJ");
+        Author authorQuartis = new Author()
+                .setAge(51)
+                .setGenre("Anthology")
+                .setName("Quartis Young");
+        authorQuartis.addBook(book);
 
-        Book bookTwo = new Book()
-                .setTitle("One Day")
-                .setIsbn("002-AT-MJ");
+        Author authorKaty = new Author()
+                .setAge(56)
+                .setGenre("Anthology")
+                .setName("Katy Loin");
+        authorKaty.addBook(book);
 
-        Book bookThree = new Book()
-                .setTitle("Head Down")
-                .setIsbn("001-AT");
+        Author authorMartin = new Author()
+                .setAge(38)
+                .setGenre("Anthology")
+                .setName("Martin Leon");
+        authorMartin.addBook(book);
 
-        authorAlicia.addBook(bookOne);
-        authorAlicia.addBook(bookTwo);
-        authorAlicia.addBook(bookThree);
+        Author authorQart = new Author()
+                .setAge(56)
+                .setGenre("Anthology")
+                .setName("Qart Pinkil");
+        authorQart.addBook(book);
 
-        authorMark.addBook(bookOne);
-        authorMark.addBook(bookTwo);
-
-        authorRepository.saveAndFlush(authorAlicia);
-        authorRepository.saveAndFlush(authorMark);
-
-        //authorAlicia.removeBook(bookOne);
+        authorRepository.saveAll(List.of(authorAlicia, authorKaty, authorMark, authorQart, authorMartin, authorQuartis));
     }
 
     @Transactional
-    public void deleteBookFromAuthor() {
-        log.info("Removing Book from Author");
-        Author author = authorRepository.findById(1L).orElseThrow();
+    public void fetchAllBookAuthors() {
         Book book = bookRepository.findById(1L).orElseThrow();
-
-        author.removeBook(book);
+        book.getAuthors().forEach(System.out::println);
     }
 }
+
+
