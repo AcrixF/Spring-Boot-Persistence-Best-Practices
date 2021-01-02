@@ -12,9 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -29,27 +32,28 @@ public class Author implements Serializable {
     private String genre;
     private int age;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "author_book_set",
-            joinColumns = @JoinColumn(name = "author_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id"))
-    private Set<Book> books = new HashSet<>();
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            mappedBy = "author",
+            orphanRemoval = true
+    )
+    private List<Book> books = new ArrayList<>();
 
     public void addBook(Book book) {
         this.books.add(book);
-        book.getAuthors().add(this);
+        book.setAuthor(this);
     }
 
     public void removeBook(Book book) {
         this.books.remove(book);
-        book.getAuthors().remove(this);
+        book.setAuthor(this);
     }
 
     public void removeBooks() {
         Iterator<Book> iterator = this.books.iterator();
         while (iterator.hasNext()) {
             Book book = iterator.next();
-            book.getAuthors().remove(this);
+            book.setAuthor(this);
             iterator.remove();
         }
     }

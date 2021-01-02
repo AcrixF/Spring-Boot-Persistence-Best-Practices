@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 @Log4j2
 public class AuthorService {
@@ -28,55 +26,37 @@ public class AuthorService {
     public void insertAuthors() {
         log.info("Inserting authors");
 
-        Book book = new Book()
-                .setTitle("Encyclopedia")
-                .setIsbn("001-all");
-
-        Author authorAlicia = new Author()
+        Author alicia = new Author()
                 .setAge(38)
                 .setGenre("Anthology")
                 .setName("Alicia Tom");
 
-        authorAlicia.addBook(book);
+        Book bookOne = new Book()
+                .setTitle("Encyclopedia")
+                .setIsbn("001-eI");
 
-        Author authorMark = new Author()
-                .setAge(23)
-                .setGenre("Anthology")
-                .setName("Mark Janel");
-        authorMark.addBook(book);
+        Book bookTwo = new Book()
+                .setTitle("Encyclopedia II")
+                .setIsbn("001-eII");
 
-        Author authorQuartis = new Author()
-                .setAge(51)
-                .setGenre("Anthology")
-                .setName("Quartis Young");
-        authorQuartis.addBook(book);
+        Book bookThree = new Book()
+                .setTitle("Encyclopedia III")
+                .setIsbn("001-eIII");
 
-        Author authorKaty = new Author()
-                .setAge(56)
-                .setGenre("Anthology")
-                .setName("Katy Loin");
-        authorKaty.addBook(book);
+        alicia.addBook(bookOne);
+        alicia.addBook(bookTwo);
+        alicia.addBook(bookThree);
 
-        Author authorMartin = new Author()
-                .setAge(38)
-                .setGenre("Anthology")
-                .setName("Martin Leon");
-        authorMartin.addBook(book);
-
-        Author authorQart = new Author()
-                .setAge(56)
-                .setGenre("Anthology")
-                .setName("Qart Pinkil");
-        authorQart.addBook(book);
-
-        authorRepository.saveAll(List.of(authorAlicia, authorKaty, authorMark, authorQart, authorMartin, authorQuartis));
+        authorRepository.saveAndFlush(alicia);
     }
 
     @Transactional
-    public void fetchAllBookAuthors() {
-        Book book = bookRepository.findById(1L).orElseThrow();
-        book.getAuthors().forEach(System.out::println);
+    public void deleteViaCascadeRemove() {
+        log.info("Removing author's Books");
+        Author author = authorRepository.findById(1L).orElseThrow();
+        authorRepository.delete(author);
     }
+
 }
 
 
