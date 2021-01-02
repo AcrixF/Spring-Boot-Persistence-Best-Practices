@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Log4j2
 public class AuthorService {
@@ -27,7 +29,7 @@ public class AuthorService {
         log.info("Inserting authors");
 
         Author alicia = new Author()
-                .setAge(38)
+                .setAge(34)
                 .setGenre("Anthology")
                 .setName("Alicia Tom");
 
@@ -47,7 +49,18 @@ public class AuthorService {
         alicia.addBook(bookTwo);
         alicia.addBook(bookThree);
 
-        authorRepository.saveAndFlush(alicia);
+        Author martin = new Author()
+                .setAge(34)
+                .setGenre("Technology")
+                .setName("Martin");
+
+        Book refactoring = new Book()
+                .setTitle("Refactoring")
+                .setIsbn("001-RFIS-01");
+
+        martin.addBook(refactoring);
+
+        authorRepository.saveAll(List.of(alicia, martin));
     }
 
     @Transactional
@@ -56,6 +69,14 @@ public class AuthorService {
         Author author = authorRepository.findById(1L).orElseThrow();
         bookRepository.deleteByAuthorIdentifier(author.getId());
         authorRepository.deleteByAuthorIdentifier(author.getId());
+    }
+
+    @Transactional
+    public void deleteViaBulkIn() {
+        log.info("Deleting books and Authors");
+        List<Author> authors = authorRepository.findByAge(34);
+        bookRepository.deleteBulkByAuthors(authors);
+        authorRepository.deleteInBatch(authors);
     }
 
 }
