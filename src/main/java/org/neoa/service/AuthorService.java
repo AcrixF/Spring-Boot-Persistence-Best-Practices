@@ -57,6 +57,15 @@ public class AuthorService {
         authorRepository.delete(author);
     }
 
+    @Transactional
+    public void deleteViaOrphanRemoval() {
+        log.info("Removing author's books by using Orphan Removal");
+        Author author = authorRepository.findById(1L).orElseThrow();
+
+        author.removeBooks();
+        authorRepository.delete(author);
+    }
+
 }
 
 
