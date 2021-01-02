@@ -51,19 +51,11 @@ public class AuthorService {
     }
 
     @Transactional
-    public void deleteViaCascadeRemove() {
-        log.info("Removing author's Books");
+    public void deleteViaIdentifiers() {
+        log.info("Deleting books by Identifier");
         Author author = authorRepository.findById(1L).orElseThrow();
-        authorRepository.delete(author);
-    }
-
-    @Transactional
-    public void deleteViaOrphanRemoval() {
-        log.info("Removing author's books by using Orphan Removal");
-        Author author = authorRepository.findById(1L).orElseThrow();
-
-        author.removeBooks();
-        authorRepository.delete(author);
+        bookRepository.deleteByAuthorIdentifier(author.getId());
+        authorRepository.deleteByAuthorIdentifier(author.getId());
     }
 
 }
