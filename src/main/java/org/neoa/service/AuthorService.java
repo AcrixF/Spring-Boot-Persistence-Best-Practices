@@ -79,6 +79,14 @@ public class AuthorService {
         authorRepository.deleteInBatch(authors);
     }
 
+    @Transactional
+    public void deleteViaDeleteInBatch() {
+        log.info("Deleting authors and books that already exist in the context");
+        Author author = authorRepository.getOne(1L);
+        bookRepository.deleteInBatch(author.getBooks());
+        authorRepository.deleteInBatch(List.of(author));
+    }
+
 }
 
 
