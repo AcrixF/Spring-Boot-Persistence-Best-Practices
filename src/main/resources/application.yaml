@@ -4,6 +4,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
+      org:
+        hibernate:
+          flushMode: COMMIT
     generate-ddl: true
     hibernate:
       ddl-auto: create
