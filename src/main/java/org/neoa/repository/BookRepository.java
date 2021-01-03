@@ -22,4 +22,10 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("delete from Book b where b.author in ?1")
     int deleteBulkByAuthors(List<Author> authors);
+
+    @Transactional
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
+    @Query("delete from Book b where b.author.id in ?1")
+    int deleteBulkByAuthorIdentifier(List<Long> id);
+
 }

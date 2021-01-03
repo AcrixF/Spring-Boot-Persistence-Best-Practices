@@ -18,4 +18,9 @@ public interface AuthorRepository extends JpaRepository<Author, Long> {
     int deleteByAuthorIdentifier(Long id);
 
     List<Author> findByAge(int age);
+
+    @Transactional
+    @Modifying(flushAutomatically = true, clearAutomatically = false)
+    @Query("delete from Author a where a.id in ?1")
+    int deleteBulkByIdentifier(List<Long> id);
 }

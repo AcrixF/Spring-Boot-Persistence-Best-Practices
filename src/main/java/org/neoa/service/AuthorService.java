@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -85,6 +86,21 @@ public class AuthorService {
         Author author = authorRepository.getOne(1L);
         bookRepository.deleteInBatch(author.getBooks());
         authorRepository.deleteInBatch(List.of(author));
+    }
+
+    @Transactional
+    public void deleteViaHardCodedIdentifiers() {
+        log.info("Deleting authors and books by it's Identifier");
+        bookRepository.deleteByAuthorIdentifier(1L);
+        authorRepository.deleteByAuthorIdentifier(1L);
+    }
+
+    @Transactional
+    public void deleteViaBulkHardCodedIdentifiers() {
+        log.info("Deleting Authors in Bulk using it's Identifiers");
+        List<Long> authorsIds = Arrays.asList(1L, 2L);
+        bookRepository.deleteBulkByAuthorIdentifier(authorsIds);
+        authorRepository.deleteBulkByIdentifier(authorsIds);
     }
 
 }
