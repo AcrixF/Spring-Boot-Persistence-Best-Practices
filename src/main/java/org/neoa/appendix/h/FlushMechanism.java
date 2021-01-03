@@ -14,7 +14,7 @@ public class FlushMechanism {
         this.entityManager = entityManager;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public void flushModes() {
         System.out.println(
                 "Flush mode, Hibernate JPA (EntityManager#getFlushMode()): "
