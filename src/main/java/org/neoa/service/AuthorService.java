@@ -77,7 +77,6 @@ public class AuthorService {
         List<Author> authors = authorRepository.findByAge(34);
         bookRepository.deleteBulkByAuthors(authors);
         authorRepository.deleteInBatch(authors);
-        authors.get(0).setGenre("NA");
     }
 
     @Transactional
