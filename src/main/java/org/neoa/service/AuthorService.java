@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static org.neoa.repository.specifications.AuthorSpecs.isAgeGt45;
+
 @Service
 @Log4j2
 public class AuthorService {
@@ -80,9 +82,16 @@ public class AuthorService {
     }
 
     @Transactional
-    public void fetchAllAuthorByAgesLessThan() {
+    public void fetchAllAuthorByAgeLessThan() {
         log.info("Fetching Author using @EntityGraph and Query Builder Mechanism");
         List<Author> authors = authorRepository.findByAgeLessThanOrderByNameDesc(35);
+        authors.forEach(System.out::println);
+    }
+
+    @Transactional
+    public void fetAllAuthorsByAgeLessThanUsingSpecification() {
+        log.info("Fetching Author using @EntityGraph and Specification");
+        List<Author> authors = authorRepository.findAll(isAgeGt45());
         authors.forEach(System.out::println);
     }
 
