@@ -26,7 +26,6 @@ public class SpringPersistenceApplication {
     @Bean
     public CommandLineRunner commandLineRunner() {
         return args -> {
-            flushMechanism.flushModes();
         };
 
     }
