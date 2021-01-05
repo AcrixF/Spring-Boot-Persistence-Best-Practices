@@ -21,6 +21,12 @@ import java.util.List;
 @Setter
 @Entity
 @Accessors(chain = true)
+@NamedEntityGraph(
+        name = "author-books-graph",
+        attributeNodes = {
+                @NamedAttributeNode("books")
+        }
+)
 public class Author implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -80,6 +86,6 @@ public class Author implements Serializable {
     @Override
     public String toString() {
         return "Author{" + "id=" + id + ", name=" + name
-                + ", genre=" + genre + ", age=" + age +  "books=" + books + '}';
+                + ", genre=" + genre + ", age=" + age + "books=" + books + '}';
     }
 }
