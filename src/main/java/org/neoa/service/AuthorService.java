@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -64,43 +63,12 @@ public class AuthorService {
         authorRepository.saveAll(List.of(alicia, martin));
     }
 
+    // ------------------------------ Item 7 ---------------------------------------
     @Transactional
-    public void deleteViaIdentifiers() {
-        log.info("Deleting books by Identifier");
+    public void fetchAuthorById() {
         Author author = authorRepository.findById(1L).orElseThrow();
-        bookRepository.deleteByAuthorIdentifier(author.getId());
-        authorRepository.deleteByAuthorIdentifier(author.getId());
-    }
-
-    @Transactional
-    public void deleteViaBulkIn() {
-        log.info("Deleting books and Authors");
-        List<Author> authors = authorRepository.findByAge(34);
-        bookRepository.deleteBulkByAuthors(authors);
-        authorRepository.deleteInBatch(authors);
-    }
-
-    @Transactional
-    public void deleteViaDeleteInBatch() {
-        log.info("Deleting authors and books that already exist in the context");
-        Author author = authorRepository.getOne(1L);
-        bookRepository.deleteInBatch(author.getBooks());
-        authorRepository.deleteInBatch(List.of(author));
-    }
-
-    @Transactional
-    public void deleteViaHardCodedIdentifiers() {
-        log.info("Deleting authors and books by it's Identifier");
-        bookRepository.deleteByAuthorIdentifier(1L);
-        authorRepository.deleteByAuthorIdentifier(1L);
-    }
-
-    @Transactional
-    public void deleteViaBulkHardCodedIdentifiers() {
-        log.info("Deleting Authors in Bulk using it's Identifiers");
-        List<Long> authorsIds = Arrays.asList(1L, 2L);
-        bookRepository.deleteBulkByAuthorIdentifier(authorsIds);
-        authorRepository.deleteBulkByIdentifier(authorsIds);
+        List<Book> books = author.getBooks();
+        books.forEach(System.out::println);
     }
 
 }
