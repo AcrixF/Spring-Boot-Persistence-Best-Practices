@@ -1,26 +1,21 @@
 package org.neoa.repository;
 
 import org.neoa.entity.Author;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Repository
+@Transactional(readOnly = true)
 public interface AuthorRepository extends JpaRepository<Author, Long> {
 
-    @Transactional
-    @Modifying(flushAutomatically = true, clearAutomatically = true)
-    @Query("delete from Author a where a.id = ?1")
-    int deleteByAuthorIdentifier(Long id);
-
-    List<Author> findByAge(int age);
-
-    @Transactional
-    @Modifying(flushAutomatically = true, clearAutomatically = false)
-    @Query("delete from Author a where a.id in ?1")
-    int deleteBulkByIdentifier(List<Long> id);
+    @Override
+    @EntityGraph(
+            value = "author-books-graph",
+            type = EntityGraph.EntityGraphType.FETCH
+    )
+    List<Author> findAll();
 }
