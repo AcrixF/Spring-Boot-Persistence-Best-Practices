@@ -73,10 +73,10 @@ public class AuthorService {
 
 
     @Transactional
-    public void fetchAuthorById() {
-        Author author = authorRepository.findById(1L).orElseThrow();
-        List<Book> books = author.getBooks();
-        books.forEach(System.out::println);
+    public void fetchAllAuthorsWithLazyMode() {
+        log.info("Fetching Author without books using @EntityGraph");
+        List<Author> authors = authorRepository.findAll();
+        authors.forEach(System.out::println);
     }
 
 }
