@@ -50,7 +50,7 @@ public class AuthorService {
         alicia.addBook(bookThree);
 
         Author martin = new Author()
-                .setAge(34)
+                .setAge(50)
                 .setGenre("Technology")
                 .setName("Martin");
 
@@ -76,6 +76,13 @@ public class AuthorService {
     public void fetchAllAuthorsWithLazyMode() {
         log.info("Fetching Author without books using @EntityGraph");
         List<Author> authors = authorRepository.findAll();
+        authors.forEach(System.out::println);
+    }
+
+    @Transactional
+    public void fetchAllAuthorByAgesLessThan() {
+        log.info("Fetching Author using @EntityGraph and Query Builder Mechanism");
+        List<Author> authors = authorRepository.findByAgeLessThanOrderByNameDesc(35);
         authors.forEach(System.out::println);
     }
 
