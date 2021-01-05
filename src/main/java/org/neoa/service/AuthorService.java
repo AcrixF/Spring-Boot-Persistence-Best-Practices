@@ -89,12 +89,18 @@ public class AuthorService {
     }
 
     @Transactional
-    public void fetAllAuthorsByAgeLessThanUsingSpecification() {
+    public void fetchAllAuthorsByAgeLessThanUsingSpecification() {
         log.info("Fetching Author using @EntityGraph and Specification");
         List<Author> authors = authorRepository.findAll(isAgeGt45());
         authors.forEach(System.out::println);
     }
 
+    @Transactional
+    public void fetchAllAuthorsWhichAgeIsBetween20And40() {
+        log.info("Fetching Author using @EntityGraph, @Query and JPQL");
+        List<Author> authors = authorRepository.fetchAllAgeBetween20And40();
+        authors.forEach(System.out::println);
+    }
 }
 
 
