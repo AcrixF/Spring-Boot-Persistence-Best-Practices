@@ -63,7 +63,15 @@ public class AuthorService {
         authorRepository.saveAll(List.of(alicia, martin));
     }
 
-    // ------------------------------ Item 7 ---------------------------------------
+
+    @Transactional
+    public void fetchingAllAuthorsWithBooks() {
+        log.info("Fetching Author with book using @EntityGraph");
+        List<Author> authors = authorRepository.findAll();
+        authors.forEach(System.out::println);
+    }
+
+
     @Transactional
     public void fetchAuthorById() {
         Author author = authorRepository.findById(1L).orElseThrow();
