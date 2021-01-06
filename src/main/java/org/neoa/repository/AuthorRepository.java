@@ -17,10 +17,10 @@ public interface AuthorRepository extends JpaRepository<Author, Long>, JpaSpecif
 
     @Override
     @EntityGraph(
-            value = "author-books-graph",
+            attributePaths = {"books"},
             type = EntityGraph.EntityGraphType.FETCH
     )
-    List<Author> findAll(Specification specification);
+    List<Author> findAll();
 
     @EntityGraph(
             value = "author-books-graph",

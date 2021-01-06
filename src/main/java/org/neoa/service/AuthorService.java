@@ -101,6 +101,13 @@ public class AuthorService {
         List<Author> authors = authorRepository.fetchAllAgeBetween20And40();
         authors.forEach(System.out::println);
     }
+
+    @Transactional
+    public void fetchAllAuthorsWithBooksUsingAttributePaths() {
+        log.info("Fetching Author using @EntityGraph and attributePaths");
+        List<Author> authors = authorRepository.findAll();
+        authors.forEach(System.out::println);
+    }
 }
 
 
