@@ -5,15 +5,12 @@ import org.neoa.entity.Author;
 import org.neoa.entity.Book;
 import org.neoa.entity.Publisher;
 import org.neoa.repository.AuthorRepository;
-import org.neoa.repository.BookRepository;
 import org.neoa.repository.PublisherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import static org.neoa.repository.specifications.AuthorSpecs.isAgeGt45;
 
 @Service
 @Log4j2
@@ -81,20 +78,6 @@ public class AuthorService {
 
         authorRepository.saveAll(List.of(alicia, martin));
     }
-
-    @Transactional
-    public void fetchingAuthorByAgeAndGenreSpecifyingNamedAttributeNodes() {
-        log.info("Fetching Author by Age and Genre using attributes nodes");
-        List<Author> authors = authorRepository.findByAgeGreaterThanAndGenre(35, "Anthology");
-        authors.forEach(System.out::println);
-    }
-    @Transactional
-    public void fetchingAuthorGenreAndAgeSpecifyingNamedAttributeNodes() {
-        log.info("Fetching Author by Genre and Age using attributes nodes");
-        List<Author> authors = authorRepository.findByGenreAndAgeGreaterThan("Technology", 45);
-        authors.forEach(System.out::println);
-    }
-
 }
 
 
