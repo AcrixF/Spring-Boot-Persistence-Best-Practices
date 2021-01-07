@@ -82,61 +82,16 @@ public class AuthorService {
         authorRepository.saveAll(List.of(alicia, martin));
     }
 
-
     @Transactional
-    public void fetchingAllAuthorsWithBooks() {
-        log.info("Fetching Author with book using @EntityGraph");
-        List<Author> authors = authorRepository.findAll();
+    public void fetchingAuthorByAgeAndGenreSpecifyingNamedAttributeNodes() {
+        log.info("Fetching Author by Age and Genre using attributes nodes");
+        List<Author> authors = authorRepository.findByAgeGreaterThanAndGenre(35, "Anthology");
         authors.forEach(System.out::println);
     }
-
-
     @Transactional
-    public void fetchAllAuthorsWithLazyMode() {
-        log.info("Fetching Author without books using @EntityGraph");
-        List<Author> authors = authorRepository.findAll();
-        authors.forEach(System.out::println);
-    }
-
-    @Transactional
-    public void fetchAllAuthorByAgeLessThan() {
-        log.info("Fetching Author using @EntityGraph and Query Builder Mechanism");
-        List<Author> authors = authorRepository.findByAgeLessThanOrderByNameDesc(35);
-        authors.forEach(System.out::println);
-    }
-
-    @Transactional
-    public void fetchAllAuthorsByAgeLessThanUsingSpecification() {
-        log.info("Fetching Author using @EntityGraph and Specification");
-        List<Author> authors = authorRepository.findAll(isAgeGt45());
-        authors.forEach(System.out::println);
-    }
-
-    @Transactional
-    public void fetchAllAuthorsWhichAgeIsBetween20And40() {
-        log.info("Fetching Author using @EntityGraph, subGraphs, @Query and JPQL");
-        List<Author> authors = authorRepository.fetchAllAgeBetween20And40();
-        authors.forEach(System.out::println);
-    }
-
-    @Transactional
-    public void fetchAllAuthorsWithBooksUsingAttributePaths() {
-        log.info("Fetching Author using @EntityGraph and attributePaths");
-        List<Author> authors = authorRepository.findAll();
-        authors.forEach(System.out::println);
-    }
-
-    @Transactional
-    public void fetchingAllAuthorsWithBooksAndPublishers() {
-        log.info("Fetching Author with book using @EntityGraph");
-        List<Author> authors = authorRepository.findAll();
-        authors.forEach(System.out::println);
-    }
-
-    @Transactional
-    public void fetchingAllAuthorsUsingAdHocEntityGraphsAndSubGraphs() {
-        log.info("Fetching Author with @EntityGraph, SubGraphs at a Ad Hoc level");
-        List<Author> authors = authorRepository.findAll();
+    public void fetchingAuthorGenreAndAgeSpecifyingNamedAttributeNodes() {
+        log.info("Fetching Author by Genre and Age using attributes nodes");
+        List<Author> authors = authorRepository.findByGenreAndAgeGreaterThan("Technology", 45);
         authors.forEach(System.out::println);
     }
 
