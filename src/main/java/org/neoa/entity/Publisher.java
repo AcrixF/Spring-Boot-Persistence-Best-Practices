@@ -4,10 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Setter
@@ -20,8 +19,15 @@ public class Publisher {
     private Long id;
     private String company;
 
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            mappedBy = "publisher",
+            orphanRemoval = true
+    )
+    private List<Book> books = new ArrayList<>();
+
     @Override
     public String toString() {
-        return "Publisher{ " + "company = " + company + "}";
+        return "Publisher{ " + "company = " + company + "book = " + books + "}";
     }
 }
