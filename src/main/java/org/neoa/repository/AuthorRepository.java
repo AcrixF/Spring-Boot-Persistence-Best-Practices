@@ -29,7 +29,7 @@ public interface AuthorRepository extends JpaRepository<Author, Long>, JpaSpecif
     List<Author> findByAgeLessThanOrderByNameDesc(int age);
 
     @EntityGraph(
-            value = "author-books-graph",
+            value = "author-books-publisher-graph",
             type = EntityGraph.EntityGraphType.FETCH
     )
     @Query("select a from Author a where a.age > 20 and a.age < 40")
