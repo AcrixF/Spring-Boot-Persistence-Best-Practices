@@ -3,6 +3,7 @@ package org.neoa.entity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -33,6 +34,22 @@ public class Author implements Serializable {
             orphanRemoval = true
     )
     private List<Book> books = new ArrayList<>();
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            mappedBy = "author",
+            orphanRemoval = true
+    )
+    @Where(clause = "price <= 20")
+    private List<Book> cheapBooks = new ArrayList<>();
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            mappedBy = "author",
+            orphanRemoval = true
+    )
+    @Where(clause = "price > 20")
+    private List<Book> restOfBooks = new ArrayList<>();
 
     public void addBook(Book book) {
         this.books.add(book);
@@ -77,7 +94,7 @@ public class Author implements Serializable {
 
     @Override
     public String toString() {
-        return "Author{" + "id=" + id + ", name=" + name
-                + ", genre=" + genre + ", age=" + age + "books=" + books + '}';
+        return "Author {" + "id= " + id + ", name= " + name
+                + ", genre= " + genre + ", age= " + age + "books= " + books + '}';
     }
 }
