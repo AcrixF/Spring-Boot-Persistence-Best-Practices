@@ -19,12 +19,10 @@ import static org.neoa.repository.specifications.AuthorSpecs.isAgeGt45;
 public class AuthorService {
 
     private final AuthorRepository authorRepository;
-    private final BookRepository bookRepository;
 
     @Autowired
     public AuthorService(AuthorRepository repository, BookRepository bookRepository) {
         this.authorRepository = repository;
-        this.bookRepository = bookRepository;
     }
 
     @Transactional
@@ -129,6 +127,7 @@ public class AuthorService {
         List<Author> authors = authorRepository.findAll();
         authors.forEach(System.out::println);
     }
+
 }
 
 
