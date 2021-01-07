@@ -11,12 +11,10 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class SpringPersistenceApplication {
     private final AuthorService authorService;
-    private final FlushMechanism flushMechanism;
 
     @Autowired
-    public SpringPersistenceApplication(AuthorService authorService, FlushMechanism flushMechanism) {
+    public SpringPersistenceApplication(AuthorService authorService) {
         this.authorService = authorService;
-        this.flushMechanism = flushMechanism;
     }
 
     public static void main(String[] args) {
@@ -28,7 +26,7 @@ public class SpringPersistenceApplication {
         return args -> {
             authorService.insertAuthors();
             Thread.sleep(3000);
-            authorService.fetchingAllAuthorsWithBooksAndPublishers();
+            authorService.fetchAllAuthorsWhichAgeIsBetween20And40();
         };
 
     }

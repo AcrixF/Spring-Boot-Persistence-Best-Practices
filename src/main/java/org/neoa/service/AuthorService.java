@@ -104,7 +104,7 @@ public class AuthorService {
 
     @Transactional
     public void fetchAllAuthorsWhichAgeIsBetween20And40() {
-        log.info("Fetching Author using @EntityGraph, @Query and JPQL");
+        log.info("Fetching Author using @EntityGraph, subGraphs, @Query and JPQL");
         List<Author> authors = authorRepository.fetchAllAgeBetween20And40();
         authors.forEach(System.out::println);
     }
