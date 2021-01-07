@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -28,6 +29,10 @@ public class Book implements Serializable {
     @JoinColumn(name = "author_id")
     private Author author;
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
+    @JoinColumn(name = "publisher_id")
+    private Publisher publisher;
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -50,6 +55,6 @@ public class Book implements Serializable {
     @Override
     public String toString() {
         return "Book{" + "id=" + id + ", title=" + title
-                + ", isbn=" + isbn + '}';
+                + ", isbn=" + isbn + "publisher: " + publisher + '}';
     }
 }
