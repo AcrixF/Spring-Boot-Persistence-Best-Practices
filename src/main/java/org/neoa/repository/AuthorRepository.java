@@ -17,7 +17,7 @@ public interface AuthorRepository extends JpaRepository<Author, Long>, JpaSpecif
 
     @Override
     @EntityGraph(
-            attributePaths = {"books"},
+            value = "author-books-publisher-graph",
             type = EntityGraph.EntityGraphType.FETCH
     )
     List<Author> findAll();
@@ -34,4 +34,6 @@ public interface AuthorRepository extends JpaRepository<Author, Long>, JpaSpecif
     )
     @Query("select a from Author a where a.age > 20 and a.age < 40")
     List<Author> fetchAllAgeBetween20And40();
+
+
 }
