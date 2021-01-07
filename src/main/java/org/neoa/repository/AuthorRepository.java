@@ -17,7 +17,7 @@ public interface AuthorRepository extends JpaRepository<Author, Long>, JpaSpecif
 
     @Override
     @EntityGraph(
-            value = "author-books-publisher-graph",
+            attributePaths = {"books.publisher"},
             type = EntityGraph.EntityGraphType.FETCH
     )
     List<Author> findAll();
