@@ -28,6 +28,6 @@ public class Publisher {
 
     @Override
     public String toString() {
-        return "Publisher{ " + "company = " + company + "book = " + books + "}";
+        return "Publisher{ id = " + id + "company = " + company + "book = " + books + "}";
     }
 }
