@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,9 +23,17 @@ import java.util.List;
 @Entity
 @Accessors(chain = true)
 @NamedEntityGraph(
-        name = "author-books-graph",
+        name = "author-books-publisher-graph",
         attributeNodes = {
-                @NamedAttributeNode("books")
+                @NamedAttributeNode(value = "books", subgraph = "publisher-subgraph")
+        },
+        subgraphs = {
+                @NamedSubgraph(
+                        name = "publisher-subgraph",
+                        attributeNodes = {
+                                @NamedAttributeNode("publisher")
+                        }
+                )
         }
 )
 public class Author implements Serializable {
