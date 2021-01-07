@@ -25,4 +25,11 @@ public class PublisherService {
         List<Publisher> publishers = publisherRepository.findAll();
         publishers.forEach(System.out::println);
     }
+
+    @Transactional
+    public void fetchingAllPublisherWithItsAssociationsUsingJPQL() {
+        log.info("Fetching the Publisher Association via subGraph and JPQL");
+        List<Publisher> publishers = publisherRepository.fetchAllIdBetween1And3();
+        publishers.forEach(System.out::println);
+    }
 }

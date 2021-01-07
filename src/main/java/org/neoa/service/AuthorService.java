@@ -6,6 +6,7 @@ import org.neoa.entity.Book;
 import org.neoa.entity.Publisher;
 import org.neoa.repository.AuthorRepository;
 import org.neoa.repository.BookRepository;
+import org.neoa.repository.PublisherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,18 +20,29 @@ import static org.neoa.repository.specifications.AuthorSpecs.isAgeGt45;
 public class AuthorService {
 
     private final AuthorRepository authorRepository;
+    private final PublisherRepository publisherRepository;
 
     @Autowired
-    public AuthorService(AuthorRepository repository, BookRepository bookRepository) {
+    public AuthorService(AuthorRepository repository, PublisherRepository publisherRepository) {
         this.authorRepository = repository;
+        this.publisherRepository = publisherRepository;
     }
 
     @Transactional
     public void insertAuthors() {
         log.info("Inserting authors");
 
-        Publisher publisher = new Publisher()
+        Publisher publisherOne = new Publisher()
                 .setCompany("Adison");
+        Publisher publisherTwo = new Publisher()
+                .setCompany("Grijalbo");
+        Publisher publisherThree = new Publisher()
+                .setCompany("Presley");
+        Publisher publisherFour = new Publisher()
+                .setCompany("Abison");
+
+        publisherRepository.saveAll(List.of(publisherOne, publisherTwo, publisherThree, publisherFour));
+
 
         Author alicia = new Author()
                 .setAge(34)
@@ -40,17 +52,17 @@ public class AuthorService {
         Book bookOne = new Book()
                 .setTitle("Encyclopedia")
                 .setIsbn("001-eI")
-                .setPublisher(publisher);
+                .setPublisher(publisherTwo);
 
         Book bookTwo = new Book()
                 .setTitle("Encyclopedia II")
                 .setIsbn("001-eII")
-                .setPublisher(publisher);
+                .setPublisher(publisherTwo);
 
         Book bookThree = new Book()
                 .setTitle("Encyclopedia III")
                 .setIsbn("001-eIII")
-                .setPublisher(publisher);
+                .setPublisher(publisherTwo);
 
         alicia.addBook(bookOne);
         alicia.addBook(bookTwo);
