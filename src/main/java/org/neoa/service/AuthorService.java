@@ -29,18 +29,6 @@ public class AuthorService {
     public void insertAuthors() {
         log.info("Inserting authors");
 
-        Publisher publisherOne = new Publisher()
-                .setCompany("Adison");
-        Publisher publisherTwo = new Publisher()
-                .setCompany("Grijalbo");
-        Publisher publisherThree = new Publisher()
-                .setCompany("Presley");
-        Publisher publisherFour = new Publisher()
-                .setCompany("Abison");
-
-        publisherRepository.saveAll(List.of(publisherOne, publisherTwo, publisherThree, publisherFour));
-
-
         Author alicia = new Author()
                 .setAge(34)
                 .setGenre("Anthology")
@@ -49,17 +37,17 @@ public class AuthorService {
         Book bookOne = new Book()
                 .setTitle("Encyclopedia")
                 .setIsbn("001-eI")
-                .setPublisher(publisherTwo);
+                .setPrice(19.90);
 
         Book bookTwo = new Book()
                 .setTitle("Encyclopedia II")
                 .setIsbn("001-eII")
-                .setPublisher(publisherTwo);
+                .setPrice(14.99);
 
         Book bookThree = new Book()
                 .setTitle("Encyclopedia III")
                 .setIsbn("001-eIII")
-                .setPublisher(publisherTwo);
+                .setPrice(29.99);
 
         alicia.addBook(bookOne);
         alicia.addBook(bookTwo);
@@ -72,11 +60,36 @@ public class AuthorService {
 
         Book refactoring = new Book()
                 .setTitle("Refactoring")
-                .setIsbn("001-RFIS-01");
+                .setIsbn("001-RFIS-01")
+                .setPrice(13.34);
 
         martin.addBook(refactoring);
 
         authorRepository.saveAll(List.of(alicia, martin));
+    }
+
+    @Transactional(readOnly = true)
+    public void fetchAuthorWithAllBooks() {
+        log.info("Fetching all author's books");
+        Author author = authorRepository.findById(1L).orElseThrow();
+        List<Book> books = author.getBooks();
+        System.out.println(books);
+    }
+
+    @Transactional(readOnly = true)
+    public void fetchAuthorWithCheapBooks() {
+        log.info("Fetching all the cheap author's books");
+        Author author = authorRepository.findById(1L).orElseThrow();
+        List<Book> books = author.getCheapBooks();
+        System.out.println(books);
+    }
+
+    @Transactional(readOnly = true)
+    public void fetchAuthorWithRestOfBooks() {
+        log.info("Fetching all the rest of the author's books");
+        Author author = authorRepository.findById(1L).orElseThrow();
+        List<Book> books = author.getRestOfBooks();
+        System.out.println(books);
     }
 }
 

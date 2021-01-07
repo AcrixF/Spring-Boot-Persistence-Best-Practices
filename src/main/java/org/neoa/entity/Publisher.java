@@ -19,15 +19,8 @@ public class Publisher {
     private Long id;
     private String company;
 
-    @OneToMany(
-            cascade = CascadeType.ALL,
-            mappedBy = "publisher",
-            orphanRemoval = true
-    )
-    private List<Book> books = new ArrayList<>();
-
     @Override
     public String toString() {
-        return "Publisher{ id = " + id + "company = " + company + "book = " + books + "}";
+        return "Publisher{ id = " + id + "company = " + company + "}";
     }
 }
