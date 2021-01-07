@@ -3,6 +3,7 @@ package org.neoa.service;
 import lombok.extern.log4j.Log4j2;
 import org.neoa.entity.Author;
 import org.neoa.entity.Book;
+import org.neoa.entity.Publisher;
 import org.neoa.repository.AuthorRepository;
 import org.neoa.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class AuthorService {
     public void insertAuthors() {
         log.info("Inserting authors");
 
+        Publisher publisher = new Publisher()
+                .setCompany("Adison");
+
         Author alicia = new Author()
                 .setAge(34)
                 .setGenre("Anthology")
@@ -37,15 +41,18 @@ public class AuthorService {
 
         Book bookOne = new Book()
                 .setTitle("Encyclopedia")
-                .setIsbn("001-eI");
+                .setIsbn("001-eI")
+                .setPublisher(publisher);
 
         Book bookTwo = new Book()
                 .setTitle("Encyclopedia II")
-                .setIsbn("001-eII");
+                .setIsbn("001-eII")
+                .setPublisher(publisher);
 
         Book bookThree = new Book()
                 .setTitle("Encyclopedia III")
-                .setIsbn("001-eIII");
+                .setIsbn("001-eIII")
+                .setPublisher(publisher);
 
         alicia.addBook(bookOne);
         alicia.addBook(bookTwo);
@@ -105,6 +112,13 @@ public class AuthorService {
     @Transactional
     public void fetchAllAuthorsWithBooksUsingAttributePaths() {
         log.info("Fetching Author using @EntityGraph and attributePaths");
+        List<Author> authors = authorRepository.findAll();
+        authors.forEach(System.out::println);
+    }
+
+    @Transactional
+    public void fetchingAllAuthorsWithBooksAndPublishers() {
+        log.info("Fetching Author with book using @EntityGraph");
         List<Author> authors = authorRepository.findAll();
         authors.forEach(System.out::println);
     }
