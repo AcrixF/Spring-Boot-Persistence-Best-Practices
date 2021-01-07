@@ -122,6 +122,13 @@ public class AuthorService {
         List<Author> authors = authorRepository.findAll();
         authors.forEach(System.out::println);
     }
+
+    @Transactional
+    public void fetchingAllAuthorsUsingAdHocEntityGraphsAndSubGraphs() {
+        log.info("Fetching Author with @EntityGraph, SubGraphs at a Ad Hoc level");
+        List<Author> authors = authorRepository.findAll();
+        authors.forEach(System.out::println);
+    }
 }
 
 

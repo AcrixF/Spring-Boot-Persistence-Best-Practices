@@ -26,7 +26,7 @@ public class SpringPersistenceApplication {
         return args -> {
             authorService.insertAuthors();
             Thread.sleep(3000);
-            authorService.fetchAllAuthorsWhichAgeIsBetween20And40();
+            authorService.fetchingAllAuthorsUsingAdHocEntityGraphsAndSubGraphs();
         };
 
     }
