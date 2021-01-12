@@ -1,7 +1,7 @@
 package org.neoa;
 
 import org.neoa.service.AuthorService;
-import org.neoa.service.PublisherService;
+import org.neoa.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -11,12 +11,12 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class SpringPersistenceApplication {
     private final AuthorService authorService;
-    private final PublisherService publisherService;
+    private final BookService bookService;
 
     @Autowired
-    public SpringPersistenceApplication(AuthorService authorService, PublisherService publisherService) {
+    public SpringPersistenceApplication(AuthorService authorService, BookService bookService) {
         this.authorService = authorService;
-        this.publisherService = publisherService;
+        this.bookService = bookService;
     }
 
     public static void main(String[] args) {
@@ -28,7 +28,7 @@ public class SpringPersistenceApplication {
         return args -> {
             authorService.insertAuthors();
             Thread.sleep(3000);
-            authorService.newBookOfAuthor();
+            bookService.fetchBookByAuthor();
         };
 
     }
