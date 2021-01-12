@@ -5,6 +5,7 @@ import org.neoa.entity.Author;
 import org.neoa.entity.Book;
 import org.neoa.entity.Publisher;
 import org.neoa.repository.AuthorRepository;
+import org.neoa.repository.BookRepository;
 import org.neoa.repository.PublisherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,12 +18,12 @@ import java.util.List;
 public class AuthorService {
 
     private final AuthorRepository authorRepository;
-    private final PublisherRepository publisherRepository;
+    private final BookRepository bookRepository;
 
     @Autowired
-    public AuthorService(AuthorRepository repository, PublisherRepository publisherRepository) {
+    public AuthorService(AuthorRepository repository, BookRepository bookRepository) {
         this.authorRepository = repository;
-        this.publisherRepository = publisherRepository;
+        this.bookRepository = bookRepository;
     }
 
     @Transactional
@@ -37,60 +38,35 @@ public class AuthorService {
         Book bookOne = new Book()
                 .setTitle("Encyclopedia")
                 .setIsbn("001-eI")
-                .setPrice(19.90);
-
-        Book bookTwo = new Book()
-                .setTitle("Encyclopedia II")
-                .setIsbn("001-eII")
-                .setPrice(14.99);
-
-        Book bookThree = new Book()
-                .setTitle("Encyclopedia III")
-                .setIsbn("001-eIII")
-                .setPrice(29.99);
-
-        alicia.addBook(bookOne);
-        alicia.addBook(bookTwo);
-        alicia.addBook(bookThree);
+                .setAuthor(alicia);
 
         Author martin = new Author()
                 .setAge(50)
                 .setGenre("Technology")
                 .setName("Martin");
 
-        Book refactoring = new Book()
+        Book bookTwo = new Book()
                 .setTitle("Refactoring")
                 .setIsbn("001-RFIS-01")
-                .setPrice(13.34);
+                .setAuthor(martin);
 
-        martin.addBook(refactoring);
-
-        authorRepository.saveAll(List.of(alicia, martin));
+        bookRepository.saveAll(List.of(bookOne, bookTwo));
     }
 
-    @Transactional(readOnly = true)
-    public void fetchAuthorWithAllBooks() {
-        log.info("Fetching all author's books");
+    @Transactional
+    public void newBookOfAuthor() {
+        log.info("Inserting new book");
         Author author = authorRepository.findById(1L).orElseThrow();
-        List<Book> books = author.getBooks();
-        System.out.println(books);
+
+        Book book = new Book();
+        book.setTitle("AHistory of Ancient Prague");
+        book.setIsbn("001-JN");
+        book.setAuthor(author);
+
+        bookRepository.save(book);
     }
 
-    @Transactional(readOnly = true)
-    public void fetchAuthorWithCheapBooks() {
-        log.info("Fetching all the cheap author's books");
-        Author author = authorRepository.findById(1L).orElseThrow();
-        List<Book> books = author.getCheapBooks();
-        System.out.println(books);
-    }
 
-    @Transactional(readOnly = true)
-    public void fetchAuthorWithRestOfBooks() {
-        log.info("Fetching all the rest of the author's books");
-        Author author = authorRepository.findById(1L).orElseThrow();
-        List<Book> books = author.getRestOfBooks();
-        System.out.println(books);
-    }
 }
 
 

@@ -4,13 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import java.io.Serializable;
 
 @Entity
@@ -23,9 +24,8 @@ public class Book implements Serializable {
     private Long id;
     private String title;
     private String isbn;
-    private double price;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "author_id")
     private Author author;
 
@@ -51,6 +51,6 @@ public class Book implements Serializable {
     @Override
     public String toString() {
         return "Book { " + " id=" + id + ", title=" + title
-                + ", isbn=" + isbn + " price= " + price + " }";
+                + ", isbn=" + isbn + " }";
     }
 }

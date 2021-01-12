@@ -3,18 +3,12 @@ package org.neoa.entity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.Where;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 @Getter
 @Setter
@@ -27,48 +21,6 @@ public class Author implements Serializable {
     private String name;
     private String genre;
     private int age;
-
-    @OneToMany(
-            cascade = CascadeType.ALL,
-            mappedBy = "author",
-            orphanRemoval = true
-    )
-    private List<Book> books = new ArrayList<>();
-
-    @OneToMany(
-            cascade = CascadeType.ALL,
-            mappedBy = "author",
-            orphanRemoval = true
-    )
-    @Where(clause = "price <= 20")
-    private List<Book> cheapBooks = new ArrayList<>();
-
-    @OneToMany(
-            cascade = CascadeType.ALL,
-            mappedBy = "author",
-            orphanRemoval = true
-    )
-    @Where(clause = "price > 20")
-    private List<Book> restOfBooks = new ArrayList<>();
-
-    public void addBook(Book book) {
-        this.books.add(book);
-        book.setAuthor(this);
-    }
-
-    public void removeBook(Book book) {
-        this.books.remove(book);
-        book.setAuthor(this);
-    }
-
-    public void removeBooks() {
-        Iterator<Book> iterator = this.books.iterator();
-        while (iterator.hasNext()) {
-            Book book = iterator.next();
-            book.setAuthor(this);
-            iterator.remove();
-        }
-    }
 
     @Override
     public boolean equals(Object obj) {
@@ -95,6 +47,6 @@ public class Author implements Serializable {
     @Override
     public String toString() {
         return "Author {" + "id= " + id + ", name= " + name
-                + ", genre= " + genre + ", age= " + age + "books= " + books + '}';
+                + ", genre= " + genre + ", age= " + age +'}';
     }
 }

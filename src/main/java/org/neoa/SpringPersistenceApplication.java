@@ -28,11 +28,7 @@ public class SpringPersistenceApplication {
         return args -> {
             authorService.insertAuthors();
             Thread.sleep(3000);
-            authorService.fetchAuthorWithAllBooks();
-            Thread.sleep(3000);
-            authorService.fetchAuthorWithCheapBooks();
-            Thread.sleep(3000);
-            authorService.fetchAuthorWithRestOfBooks();
+            authorService.newBookOfAuthor();
         };
 
     }
