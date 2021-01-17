@@ -21,10 +21,31 @@ public class BookService {
         this.authorRepository = authorRepository;
     }
 
-    @Transactional(readOnly = true)
-    public Book fetchBookByAuthor() {
-        log.info("Fetching Book By Author");
+    @Transactional
+    public void addBookToAuthorUsingFindBy() {
+        log.info("Adding book to Author using findById");
         Author author = authorRepository.findById(1L).orElseThrow();
-        return bookRepository.fetchBookByAuthor(author);
+
+        Book book = new Book();
+        book.setIsbn("001-MJ");
+        book.setTitle("The Canterbury Anthology");
+        book.setAuthor(author);
+
+        bookRepository.save(book);
     }
+
+    @Transactional
+    public void addBookToAuthorUsingGetOne() {
+        log.info("Adding book to Author using getOne");
+        Author proxy = authorRepository.getOne(1L);
+
+        Book book = new Book();
+        book.setIsbn("001-MJ");
+        book.setTitle("The Canterbury Anthology");
+        book.setAuthor(proxy);
+
+        bookRepository.save(book);
+    }
+
+
 }

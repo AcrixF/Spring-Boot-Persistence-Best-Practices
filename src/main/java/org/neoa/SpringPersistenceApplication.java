@@ -27,6 +27,10 @@ public class SpringPersistenceApplication {
     public CommandLineRunner commandLineRunner() {
         return args -> {
             authorService.insertAuthors();
+            Thread.sleep(3000);
+            bookService.addBookToAuthorUsingFindBy();
+            Thread.sleep(3000);
+            bookService.addBookToAuthorUsingGetOne();
         };
 
     }
