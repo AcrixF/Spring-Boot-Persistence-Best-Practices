@@ -69,7 +69,7 @@ public class AuthorService {
     @Transactional
     public void fetchingAuthor() {
         log.info("Fetching Author using a bidirectional @OneToOne association");
-        Author author = authorRepository.findById(1L).orElseThrow();
+        authorRepository.findById(1L).orElseThrow();
     }
 
 
