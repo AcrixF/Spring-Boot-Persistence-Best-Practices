@@ -1,0 +1,18 @@
+package org.neoa.validation;
+
+import org.neoa.entity.Review;
+
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+import java.util.Objects;
+import java.util.stream.Stream;
+
+public class JustOneOfManyValidator implements ConstraintValidator<JustOneOfMany, Review> {
+
+    @Override
+    public boolean isValid(Review review, ConstraintValidatorContext ctx) {
+        return Stream.of(review.getContent(), review.getArticle(), review.getMagazine())
+                .filter(Objects::nonNull)
+                .count() == 1;
+    }
+}
