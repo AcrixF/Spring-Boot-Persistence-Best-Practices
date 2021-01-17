@@ -50,6 +50,7 @@ public class AuthorService {
                 .setIsbn("001-RFIS-01")
                 .setAuthor(martin);
 
+        bookRepository.saveAll(List.of(bookOne, bookTwo));
         authorRepository.saveAll(List.of(alicia, martin));
     }
 
@@ -72,6 +73,12 @@ public class AuthorService {
         authorRepository.findById(1L).orElseThrow();
     }
 
+    @Transactional
+    public Book fetchBookByAuthorId() {
+        log.info("Fetching Author using a bidirectional @OneToOne association @MapId");
+        Author author = authorRepository.findById(1L).orElseThrow();
+        return bookRepository.findById(author.getId()).orElseThrow();
+    }
 
 }
 
