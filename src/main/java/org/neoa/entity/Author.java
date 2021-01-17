@@ -1,17 +1,21 @@
 package org.neoa.entity;
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Getter
-@Setter
 @Entity
 @Accessors(chain = true)
 public class Author implements Serializable {
@@ -21,6 +25,34 @@ public class Author implements Serializable {
     private String name;
     private String genre;
     private int age;
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY)
+    private List<Book> books = new ArrayList<>();
+
+
+    public Author addBook(Book book) {
+        book.setAuthor(this);
+        this.books.add(book);
+        return this;
+    }
+
+    public Author removeBook(Book book) {
+        book.setAuthor(null);
+        this.books.remove(book);
+        return this;
+    }
+
+
+    public Optional<String> getName() {
+        return Optional.ofNullable(name);
+    }
+
+    public Optional<String> getGenre() {
+        return Optional.ofNullable(genre);
+    }
 
     @Override
     public boolean equals(Object obj) {
