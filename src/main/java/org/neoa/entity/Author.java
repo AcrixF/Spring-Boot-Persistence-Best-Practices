@@ -14,7 +14,6 @@ import javax.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Getter
 @Setter
@@ -47,14 +46,6 @@ public class Author implements Serializable {
         return this;
     }
 
-
-    public Optional<String> getName() {
-        return Optional.ofNullable(name);
-    }
-
-    public Optional<String> getGenre() {
-        return Optional.ofNullable(genre);
-    }
 
     @Override
     public boolean equals(Object obj) {

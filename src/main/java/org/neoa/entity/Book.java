@@ -1,5 +1,6 @@
 package org.neoa.entity;
 
+import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
@@ -11,10 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
-import java.util.Optional;
 
 @Entity
 @Setter
+@Getter
 @Accessors(chain = true)
 public class Book implements Serializable {
     @Id
@@ -27,18 +28,6 @@ public class Book implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
     private Author author;
-
-    public Optional<String> getTitle() {
-        return Optional.ofNullable(title);
-    }
-
-    public Optional<String> getIsbn() {
-        return Optional.ofNullable(isbn);
-    }
-
-    public Optional<Author> getAuthor() {
-        return Optional.ofNullable(author);
-    }
 
     @Override
     public boolean equals(Object obj) {
