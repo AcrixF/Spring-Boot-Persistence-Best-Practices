@@ -1,6 +1,7 @@
 package org.neoa.entity;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import javax.persistence.CascadeType;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Getter
+@Setter
 @Entity
 @Accessors(chain = true)
 public class Author implements Serializable {
