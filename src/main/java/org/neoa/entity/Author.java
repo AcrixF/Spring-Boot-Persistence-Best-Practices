@@ -35,13 +35,37 @@ public class Author implements Serializable {
     private int age;
 
 
+    private Author() {}
+
+    public Author(Author author) {
+        this.genre = author.getGenre();
+        books.addAll(author.getBooks());
+    }
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "author_book",
             joinColumns = @JoinColumn(name = "author_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id")
     )
-    private Set<Book> Books = new LinkedHashSet<>();
+    private Set<Book> books = new LinkedHashSet<>();
+
+    public Author addBook(Book book) {
+        book.getAuthors().add(this);
+        this.books.add(book);
+        return this;
+    }
+
+    public Author addBooks(List<Book> books) {
+        books.forEach(this::addBook);
+        return this;
+    }
+
+    public Author removeBook(Book book) {
+        book.getAuthors().remove(this);
+        this.books.remove(book);
+        return this;
+    }
 
     @Override
     public boolean equals(Object obj) {

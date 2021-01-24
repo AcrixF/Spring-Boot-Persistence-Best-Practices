@@ -4,6 +4,7 @@ import lombok.extern.log4j.Log4j2;
 import org.neoa.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Log4j2
@@ -16,6 +17,11 @@ public class AuthorService {
         this.authorRepository = repository;
     }
 
+
+    @Transactional
+    public void insetAuthorAndBooks() {
+
+    }
 }
 
 

@@ -29,7 +29,7 @@ public class Book implements Serializable {
 
 
     @ManyToMany(mappedBy = "books")
-    private Set<Author> author = new LinkedHashSet<>();
+    private Set<Author> authors = new LinkedHashSet<>();
 
     @Override
     public boolean equals(Object obj) {
