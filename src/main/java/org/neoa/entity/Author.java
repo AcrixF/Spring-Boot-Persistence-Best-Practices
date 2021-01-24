@@ -34,14 +34,6 @@ public class Author implements Serializable {
     private String genre;
     private int age;
 
-
-    private Author() {}
-
-    public Author(Author author) {
-        this.genre = author.getGenre();
-        books.addAll(author.getBooks());
-    }
-
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "author_book",
