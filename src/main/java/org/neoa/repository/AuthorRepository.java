@@ -1,10 +1,10 @@
 package org.neoa.repository;
 
-import org.neoa.entity.Author;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import java.io.Serializable;
+import java.util.Optional;
 
-@Repository
-public interface AuthorRepository extends JpaRepository<Author, Long> {
-
+public interface AuthorRepository<T, ID extends Serializable> {
+    Optional<T> find(Class<T> clazz, ID id);
+    Optional<T> findViaSession(Class<T> clazz, ID id);
+    void save(T t);
 }

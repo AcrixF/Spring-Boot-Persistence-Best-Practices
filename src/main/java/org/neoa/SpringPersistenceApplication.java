@@ -28,9 +28,10 @@ public class SpringPersistenceApplication {
         return args -> {
             authorService.insertAuthor();
             Thread.sleep(2000);
-            authorService.findAuthorById();
+            authorService.findAuthorByIdViaEntityManager();
+            Thread.sleep(2000);
+            authorService.findAuthorByIdViaHibernateSession();
         };
-
     }
 
 }

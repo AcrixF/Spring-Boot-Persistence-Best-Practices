@@ -3,6 +3,7 @@ package org.neoa.service;
 import lombok.extern.log4j.Log4j2;
 import org.neoa.entity.Author;
 import org.neoa.repository.AuthorRepository;
+import org.neoa.repository.AuthorRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,10 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Log4j2
 public class AuthorService {
 
-    private final AuthorRepository authorRepository;
+    private final AuthorRepositoryImpl authorRepository;
 
     @Autowired
-    public AuthorService(AuthorRepository repository) {
+    public AuthorService(AuthorRepositoryImpl repository) {
         this.authorRepository = repository;
     }
 
@@ -31,11 +32,19 @@ public class AuthorService {
     }
 
     @Transactional
-    public void findAuthorById() {
-        log.info("Find Author via Spring Data");
-        Author author = authorRepository.findById(1L)
+    public void findAuthorByIdViaEntityManager() {
+        log.info("Find Author via Entity Manager");
+        authorRepository.find(Author.class, 1L)
                 .orElseThrow();
     }
+
+    @Transactional
+    public void findAuthorByIdViaHibernateSession() {
+        log.info("Find Author via Hibernate Session");
+        authorRepository.findViaSession(Author.class, 1L);
+    }
+
+
 }
 
 
