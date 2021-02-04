@@ -20,15 +20,13 @@ public class AuthorService {
 
 
     @Transactional
-    public void insetAuthorAndBooks() {
+    public void insetAuthor() {
         Author author = new Author();
         author.setName("Joana Nimar");
         author.setGenre("History");
         author.setAge(34);
 
-        authorRepository.save(author);
-
-        author.setAge(35);
+        authorRepository.save(author);;
     }
 }
 
