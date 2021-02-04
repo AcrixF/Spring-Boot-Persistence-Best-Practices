@@ -1,6 +1,7 @@
 package org.neoa.service;
 
 import lombok.extern.log4j.Log4j2;
+import org.neoa.entity.Author;
 import org.neoa.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,14 @@ public class AuthorService {
 
     @Transactional
     public void insetAuthorAndBooks() {
+        Author author = new Author();
+        author.setName("Joana Nimar");
+        author.setGenre("History");
+        author.setAge(34);
 
+        authorRepository.save(author);
+
+        author.setAge(35);
     }
 }
 

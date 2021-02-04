@@ -24,8 +24,6 @@ import java.util.Set;
 @Setter
 @Accessors(chain = true)
 @Entity
-@Immutable
-@Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "Author")
 public class Author implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
