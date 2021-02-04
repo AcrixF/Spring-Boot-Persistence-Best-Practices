@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 @Transactional(readOnly = true)
-public class AuthorRepositoryImpl<T, ID extends Serializable> implements AuthorRepository<T, ID> {
+public class DaoImpl<T, ID extends Serializable> implements Dao<T, ID> {
 
     @PersistenceContext
     private EntityManager entityManager;

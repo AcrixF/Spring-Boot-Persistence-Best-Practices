@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class SpringPersistenceApplication {
+
     private final AuthorService authorService;
     private final BookService bookService;
 
@@ -28,9 +29,7 @@ public class SpringPersistenceApplication {
         return args -> {
             authorService.insertAuthor();
             Thread.sleep(2000);
-            authorService.findAuthorByIdViaEntityManager();
-            Thread.sleep(2000);
-            authorService.findAuthorByIdViaHibernateSession();
+            authorService.directFetching();
         };
     }
 

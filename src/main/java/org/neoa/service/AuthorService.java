@@ -2,8 +2,8 @@ package org.neoa.service;
 
 import lombok.extern.log4j.Log4j2;
 import org.neoa.entity.Author;
-import org.neoa.repository.AuthorRepository;
-import org.neoa.repository.AuthorRepositoryImpl;
+import org.neoa.repository.DaoImpl;
+import org.neoa.repository.specifications.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,11 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Log4j2
 public class AuthorService {
 
-    private final AuthorRepositoryImpl authorRepository;
+    private final DaoImpl daoImpl;
+    private final AuthorRepository authorRepository;
 
     @Autowired
-    public AuthorService(AuthorRepositoryImpl repository) {
-        this.authorRepository = repository;
+    public AuthorService(DaoImpl daoImpl, AuthorRepository authorRepository) {
+        this.daoImpl = daoImpl;
+        this.authorRepository = authorRepository;
     }
 
 
@@ -28,20 +30,17 @@ public class AuthorService {
         author.setGenre("History");
         author.setAge(34);
 
-        authorRepository.save(author);;
+        daoImpl.save(author);;
     }
 
     @Transactional
-    public void findAuthorByIdViaEntityManager() {
-        log.info("Find Author via Entity Manager");
-        authorRepository.find(Author.class, 1L)
-                .orElseThrow();
-    }
-
-    @Transactional
-    public void findAuthorByIdViaHibernateSession() {
-        log.info("Find Author via Hibernate Session");
-        authorRepository.findViaSession(Author.class, 1L);
+    public void directFetching() {
+        log.info("Direct fetching via Spring Data");
+        authorRepository.findById(1L);
+        log.info("Direct fetching via EntityManager");
+        daoImpl.find(Author.class, 1L);
+        log.info("Direct fetching via Session");
+        daoImpl.findViaSession(Author.class, 1L);
     }
 
 
