@@ -26,7 +26,9 @@ public class SpringPersistenceApplication {
     @Bean
     public CommandLineRunner commandLineRunner() {
         return args -> {
-            authorService.insetAuthor();
+            authorService.insertAuthor();
+            Thread.sleep(2000);
+            authorService.findAuthorById();
         };
 
     }

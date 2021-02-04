@@ -20,7 +20,7 @@ public class AuthorService {
 
 
     @Transactional
-    public void insetAuthor() {
+    public void insertAuthor() {
         log.info("Inserting author");
         Author author = new Author();
         author.setName("Joana Nimar");
@@ -28,6 +28,13 @@ public class AuthorService {
         author.setAge(34);
 
         authorRepository.save(author);;
+    }
+
+    @Transactional
+    public void findAuthorById() {
+        log.info("Find Author via Spring Data");
+        Author author = authorRepository.findById(1L)
+                .orElseThrow();
     }
 }
 
