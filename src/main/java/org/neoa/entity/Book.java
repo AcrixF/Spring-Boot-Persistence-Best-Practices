@@ -27,10 +27,6 @@ public class Book implements Serializable {
     private String title;
     private String isbn;
 
-
-    @ManyToMany(mappedBy = "books")
-    private Set<Author> authors = new LinkedHashSet<>();
-
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

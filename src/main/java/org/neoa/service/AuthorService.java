@@ -21,6 +21,7 @@ public class AuthorService {
 
     @Transactional
     public void insetAuthor() {
+        log.info("Inserting author");
         Author author = new Author();
         author.setName("Joana Nimar");
         author.setGenre("History");
